@@ -1,68 +1,26 @@
 {
   "expo": {
-    "name": "Telegram Chat UI",
+    "name": "Telegram Chat",
     "slug": "telegram-chat",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "telegram-chat",
-    "userInterfaceStyle": "light",
     "newArchEnabled": false,
-    "splash": {
-      "image": "./assets/images/icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#7ab87a"
-    },
-    "ios": {
-      "supportsTablet": false,
-      "infoPlist": {
-        "UIBackgroundModes": [
-          "fetch",
-          "processing"
-        ]
-      }
-    },
     "android": {
       "package": "com.flashchat.telegramui",
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff"
+      },
       "permissions": [
-        "android.permission.FOREGROUND_SERVICE",
-        "android.permission.FOREGROUND_SERVICE_DATA_SYNC",
-        "android.permission.RECEIVE_BOOT_COMPLETED",
-        "android.permission.VIBRATE",
-        "android.permission.POST_NOTIFICATIONS"
+        "INTERNET"
       ]
-    },
-    "web": {
-      "favicon": "./assets/images/icon.png"
     },
     "plugins": [
       [
-        "expo-router",
+        "react-native-webview",
         {
-          "origin": "https://replit.com/"
+          "allowsInlineMediaPlayback": true
         }
-      ],
-      "expo-font",
-      "expo-web-browser",
-      [
-        "expo-notifications",
-        {
-          "icon": "./assets/images/icon.png",
-          "color": "#3390ec",
-          "sounds": []
-        }
-      ],
-      "expo-task-manager"
-    ],
-    "experiments": {
-      "typedRoutes": true,
-      "reactCompiler": true
-    },
-    "owner": "jjtghgffvfj",
-    "extra": {
-      "eas": {
-        "projectId": "2e03a674-2318-4f45-86db-bc23f5dbe5b6"
-      }
-    }
+      ]
+    ]
   }
 }
