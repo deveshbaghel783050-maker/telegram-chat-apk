@@ -11,43 +11,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
       - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '17'
 
-      - name: Install dependencies
-        run: npm install --legacy-peer-deps
-
-      - name: Ensure react-native-webview lib exists
+      - name: Download Gradle
         run: |
-          RNW_DIR="node_modules/react-native-webview"
-          if [ ! -d "$RNW_DIR/lib" ]; then
-            echo "lib/ missing - creating stub"
-            mkdir -p "$RNW_DIR/lib"
-            cp -r "$RNW_DIR/src/"* "$RNW_DIR/lib/" 2>/dev/null || true
-          fi
-          ls "$RNW_DIR/lib" || echo "lib still missing"
-
-      - name: Prebuild Android project
-        run: npx expo prebuild --platform android --clean --no-install
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          wget -q https://services.gradle.org/distributions/gradle-8.7-bin.zip -O /tmp/gradle.zip
+          unzip -q /tmp/gradle.zip -d /tmp/gradle
+          echo "/tmp/gradle/gradle-8.7/bin" >> $GITHUB_PATH
 
       - name: Build Debug APK
-        run: |
-          cd android
-          chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon -x test
+        working-directory: android
+        run: gradle assembleDebug --no-daemon -x test
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: telegram-chat-debug
+          name: flashchat-debug
           path: android/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
           retention-days: 7
